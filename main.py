@@ -9,6 +9,16 @@ updater = Updater(token=bottoken, use_context=True)
 dispatcher = updater.dispatcher
 def push():
   os.system("./push.sh")
+def list(update, context):
+  if str(update.effective_chat.id) == owner:
+    o = ""
+    os.system("rm tree.txt && tree > tree.txt")
+    file = open("tree.txt")
+    for line in file:
+      o += line
+    bot.send_message(chat_id=owner, text=o)
+  else:
+    bot.send_message(chat_id=update.effective_chat.id, text="permission denied")
 def create(dir, link, update, context):
   os.system("mkdir " + dir + " && cd " + dir + " && touch index.html")
   if files.checkexist(dir + "/index.html"):
@@ -27,7 +37,7 @@ def start(update, context):
   user = update.effective_user.id
   cout = context.bot.send_message
   if str(user) == owner:
-    cout(chat_id=owner, text="Commands:\n/create <path> <link>: create new redirect path\n/rm <path>: remove a redirect path")
+    cout(chat_id=owner, text="Commands:\n/create <path> <link>: create new redirect path\n/rm <path>: remove a redirect path\n/list: list files")
   else:
     cout(chat_id=user, text="permission denied")
 def messageh(update, context):
@@ -45,8 +55,10 @@ def messageh(update, context):
     path = update.message.text.replace("/rm ", "")
     remove(path, update, context)
 start_handler = CommandHandler("start", start)
+list_handler = CommandHandler("list", list)
 message_handler = MessageHandler(Filters.text, messageh)
 dispatcher.add_handler(start_handler)
+dispatcher.add_handler(list_handler)
 dispatcher.add_handler(message_handler)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 updater.start_polling()
