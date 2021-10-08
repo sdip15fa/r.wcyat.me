@@ -15,11 +15,14 @@ def create(dir, link, update, context):
     os.remove(dir + "/index.html")
   files.appendfile(dir + "/index.html", "<html><body onload=\"window.location.href=\'" + link + "\'></body></html>")
   push()
-  context.bot.send_message(chat_id=update.effective_user.id, text="Done.")
+  context.bot.send_message(chat_id=owner, text="Done.")
 def remove(dir, update, context):
-  os.system("rm -rf " + dir)
-  push()
-  context.bot.send_message(chat_id=update.effective_user.id, text="Done.")
+  try:
+    os.system("rm -rf " + dir)
+    push()
+    context.bot.send_message(chat_id=owner, text="Done.")
+  except:
+    context.bot.send_message(chat_id=owner, text="No such path.")
 def start(update, context):
   user = update.effective_user.id
   cout = context.bot.send_message
