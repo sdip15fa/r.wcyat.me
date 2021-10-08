@@ -12,7 +12,11 @@ def push():
 def list(update, context):
   if str(update.effective_chat.id) == owner:
     o = ""
-    os.system("rm tree.txt && tree > tree.txt")
+    try:
+      os.system("rm tree.txt")
+    except:
+      pass
+    os.system("tree > tree.txt")
     file = open("tree.txt")
     for line in file:
       o += line
