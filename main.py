@@ -13,7 +13,7 @@ def create(dir, link, update, context):
   os.system("mkdir " + dir + " && cd " + dir + " && touch index.html")
   if files.checkexist(dir + "/index.html"):
     os.remove(dir + "/index.html")
-  files.appendfile(dir + "/index.html", "<html><body onload=\"window.location.href=\'" + link + "\'\"></body></html>")
+  files.appendfile(dir + "/index.html", "<!DOCTYPE html><html lang=\"en-US\"><body onload=\"window.location.href=\'" + link + "\'\"></body></html>")
   push()
   context.bot.send_message(chat_id=owner, text="Done.")
 def remove(dir, update, context):
