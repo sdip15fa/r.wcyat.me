@@ -12,7 +12,7 @@ You need to have pip and python3 installed.
 
 ## Telegram bot
 <pre>
-/create <path> <link>: create a directory containing an index.html which redirects to the link.
-For root directory, use:  /create . <link>
+/create path link: create a directory containing an index.html which redirects to the link.
+For root directory, use:  /create . link
 
-/rm <path>: remove a directory
+/rm path: remove a directory
