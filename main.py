@@ -40,7 +40,6 @@ def remove(dir, update, context):
 def start(update, context):
   user = update.effective_chat.id
   cout = context.bot.send_message
-  print(user)
   if str(user) == owner:
     cout(chat_id=owner, text="Commands:\n/create <path> <link>: create new redirect path\n/rm <path>: remove a redirect path\n/list: list files")
   else:
