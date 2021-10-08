@@ -2,7 +2,7 @@ import os, logging, telegram
 import wcyatfiles as files
 os.system("git pull origin master && git pull azure master && pip install python-telegram-bot")
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-bottoken=str(os.environ['bottoken'])
+bottoken = str(os.environ['bottoken'])
 owner = str(os.environ['owner'])
 bot = telegram.Bot(token=bottoken)
 updater = Updater(token=bottoken, use_context=True)
