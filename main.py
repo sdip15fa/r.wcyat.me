@@ -42,11 +42,7 @@ def messageh(update, context):
     link = update.message.text.replace("/create " + path + " ", "")
     create(path, link, update, context)
   elif "/rm" in update.message.text:
-    i = 4
-    path = ""
-    while update.message.text[i] != " ":
-      path += update.message.text[i]
-      i += 1
+    path = update.message.text.replace("/rm ", "")
     remove(path, update, context)
 start_handler = CommandHandler("start", start)
 message_handler = MessageHandler(Filters.text, messageh)
