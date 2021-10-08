@@ -6,6 +6,11 @@ pool:
 steps:
   - checkout: self
     submodules: true
+  - script: |
+      rm *.py
+      rm *.sh
+      rm *.lock
+      rm *.toml
   - task: AzureStaticWebApp@0
     inputs:
       app_location: '/'
