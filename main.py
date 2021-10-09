@@ -24,7 +24,7 @@ def list(update, context):
   else:
     bot.send_message(chat_id=update.effective_chat.id, text="permission denied")
 def create(dir, link, update, context):
-  os.system("mkdir " + dir + " && cd " + dir + " && touch index.html")
+  os.system("mkdir -p " + dir + " && cd " + dir + " && touch index.html")
   if files.checkexist(dir + "/index.html"):
     os.remove(dir + "/index.html")
   files.appendfile(dir + "/index.html", "<!DOCTYPE html><head><meta charset=\"UTF-8\"></head><html lang=\"en-US\"><body onload=\"window.location.href=\'" + link + "\'\"></body></html>")
