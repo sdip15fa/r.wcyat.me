@@ -1,5 +1,5 @@
-git config --global user.name "wcyat"
-git config --global user.email "9657150-wcyat@users.noreply.gitlab.com"
+git config --global user.name "actions-bot"
+git config --global user.email "actions-bot@wcyat.me"
 git add -A
 git commit -a -m update
 git pull origin master
