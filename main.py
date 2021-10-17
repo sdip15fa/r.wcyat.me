@@ -1,4 +1,6 @@
-import os, logging, telegram
+import os
+os.system("pip install python-telegram-bot")
+import logging, telegram
 import wcyatfiles as files
 os.system("git pull origin master && git pull azure master && pip install python-telegram-bot")
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
