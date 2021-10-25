@@ -46,9 +46,7 @@ def create(dir, link, update, context):
         os.remove(dir + "/index.html")
     files.appendfile(
         dir + "/index.html",
-        '<!DOCTYPE html><head><meta charset="UTF-8"></head><html lang="en-US"><body onload="window.location.href=\''
-        + link
-        + "'\"></body></html>",
+        '<!DOCTYPE html><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url=' + link + '" /></head><html lang="en-US"><body></body></html>',
     )
     push()
     context.bot.send_message(chat_id=owner, text="Done.")
