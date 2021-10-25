@@ -1,6 +1,7 @@
 import os
 from os.path import exists
 
+
 def createfile(filename):
     if checkexist(filename):
         os.remove(filename)
