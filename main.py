@@ -1,6 +1,6 @@
 import logging
 import os
-
+os.system("pip install python-telegram-bot")
 import telegram
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
