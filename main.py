@@ -3,10 +3,7 @@ import os
 os.system("pip install python-telegram-bot")
 import telegram
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
-
 import wcyatfiles as files
-
-os.system("pip install python-telegram-bot")
 
 os.system(
     "git pull origin master && git pull azure master && pip install python-telegram-bot"
