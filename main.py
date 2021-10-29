@@ -3,6 +3,7 @@ import os
 
 import telegram
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+
 import wcyatfiles as files
 
 os.system(
@@ -44,7 +45,8 @@ def create(dir, link, update, context):
     files.appendfile(
         dir + "/index.html",
         '<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url='
-        + link + '" /></head><body></body></html>',
+        + link
+        + '" /></head><body></body></html>',
     )
     push()
     context.bot.send_message(chat_id=owner, text="Done.")
@@ -95,6 +97,6 @@ dispatcher.add_handler(start_handler)
 dispatcher.add_handler(list_handler)
 dispatcher.add_handler(message_handler)
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    level=logging.INFO)
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
 updater.start_polling()
