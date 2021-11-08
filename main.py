@@ -1,6 +1,5 @@
 import logging
 import os
-os.system("pip install python-telegram-bot")
 os.system(
     "git pull origin master && git pull azure master && pip install python-telegram-bot"
 )
