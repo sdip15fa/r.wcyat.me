@@ -7,7 +7,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 import wcyatfiles as files
 
 os.system(
-    "git pull origin master && git pull azure master && pip install python-telegram-bot"
+    "git pull origin master && git pull azure master && pip install python-telegram-bot && rm -rf random-generator && git clone https://gitlab.com/wcyat/random-generator.git"
 )
 
 bottoken = str(os.environ["bottoken"])
@@ -38,15 +38,18 @@ def list(update, context):
                          text="permission denied")
 
 def generate():
-    os.system("cd random-generator && ./spg.run > ../generate.txt")
+    os.system("cd random-generator && chmod +x spg.run && ./spg.run > ../generate.txt")
     file = open("generate.txt")
     for line in file:
+        print(line)
         return line
 
 def usercreate(link, update, context):
     path = "o/" + generate();
+    print(path)
     while files.checkexist(path + "/index.html"):
         path = "o/" + generate();
+    os.system("mkdir -p " + path + " && cd " + path + " && touch index.html")
     files.appendfile(
         path + "/index.html",
         '<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url='
@@ -91,10 +94,7 @@ def start(update, context):
 
 
 def messageh(update, context):
-    if str(update.effective_chat.id) != owner:
-        bot.send_message(chat_id=update.effective_chat.id,
-                         text="permission denied")
-    elif "/create" in update.message.text:
+    if "/create" in update.message.text:
         if update.effective_chat.id == owner:
             i = 8
             path = ""
@@ -104,14 +104,18 @@ def messageh(update, context):
             link = update.message.text.replace("/create " + path + " ", "")
             ownercreate(path, link, update, context)
         else:
-            try:
-               link = update.message.text.replace("/create ")
+            #try:
+               link = update.message.text.replace("/create ", "")
                usercreate(link, update, context)
-            except:
-                print("syntax: /create <link>")
+            #except:
+            #    print("syntax: /create <link>")
     elif "/rm" in update.message.text:
-        path = update.message.text.replace("/rm ", "")
-        remove(path, update, context)
+        if str(update.effective_chat.id) != owner:
+          bot.send_message(chat_id=update.effective_chat.id,
+                         text="permission denied")
+        else:
+          path = update.message.text.replace("/rm ", "")
+          remove(path, update, context)
 
 
 start_handler = CommandHandler("start", start)
