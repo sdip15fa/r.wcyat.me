@@ -104,11 +104,11 @@ def messageh(update, context):
             link = update.message.text.replace("/create " + path + " ", "")
             ownercreate(path, link, update, context)
         else:
-            #try:
+            try:
                link = update.message.text.replace("/create ", "")
                usercreate(link, update, context)
-            #except:
-            #    print("syntax: /create <link>")
+            except:
+                bot.send_message(chat_id=update.effective_chat.id, text="syntax: /create <link>")
     elif "/rm" in update.message.text:
         if str(update.effective_chat.id) != owner:
           bot.send_message(chat_id=update.effective_chat.id,
