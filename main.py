@@ -37,8 +37,26 @@ def list(update, context):
         bot.send_message(chat_id=update.effective_chat.id,
                          text="permission denied")
 
+def generate():
+    os.system("cd random-generator && ./spg.run > ../generate.txt")
+    file = open("generate.txt")
+    for line in file:
+        return line
 
-def create(dir, link, update, context):
+def usercreate(link, update, context):
+    path = "o/" + generate();
+    while files.checkexist(path + "/index.html"):
+        path = "o/" + generate();
+    files.appendfile(
+        path + "/index.html",
+        '<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url='
+        + link
+        + '" /></head><body></body></html>',
+    )
+    push()
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Done. Your link is https://r.wcyat.me/" + path + ".")
+
+def ownercreate(dir, link, update, context):
     os.system("mkdir -p " + dir + " && cd " + dir + " && touch index.html")
     if files.checkexist(dir + "/index.html"):
         os.remove(dir + "/index.html")
@@ -50,7 +68,6 @@ def create(dir, link, update, context):
     )
     push()
     context.bot.send_message(chat_id=owner, text="Done.")
-
 
 def remove(dir, update, context):
     try:
@@ -78,13 +95,20 @@ def messageh(update, context):
         bot.send_message(chat_id=update.effective_chat.id,
                          text="permission denied")
     elif "/create" in update.message.text:
-        i = 8
-        path = ""
-        while update.message.text[i] != " ":
-            path += update.message.text[i]
-            i += 1
-        link = update.message.text.replace("/create " + path + " ", "")
-        create(path, link, update, context)
+        if update.effective_chat.id == owner:
+            i = 8
+            path = ""
+            while update.message.text[i] != " ":
+                path += update.message.text[i]
+                i += 1
+            link = update.message.text.replace("/create " + path + " ", "")
+            ownercreate(path, link, update, context)
+        else:
+            try:
+               link = update.message.text.replace("/create ")
+               usercreate(link, update, context)
+            except:
+                print("syntax: /create <link>")
     elif "/rm" in update.message.text:
         path = update.message.text.replace("/rm ", "")
         remove(path, update, context)

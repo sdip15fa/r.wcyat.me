@@ -1,0 +1,3 @@
+[submodule "random-generator"]
+	path = random-generator
+	url = https://gitlab.com/wcyat/random-generator.git
