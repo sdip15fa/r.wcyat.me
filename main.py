@@ -40,11 +40,6 @@ def list(update, context):
 def generate():
     o = str(subprocess.run(["random-generator/spg.run"],     capture_output=True).stdout).replace("b'", "").replace("'", "")
     return o
-    os.system("cd random-generator && chmod +x spg.run && ./spg.run > ../generate.txt")
-    file = open("generate.txt")
-    for line in file:
-        print(line)
-        return line
 
 def usercreate(link, update, context):
     path = "o/" + generate();
@@ -59,7 +54,7 @@ def usercreate(link, update, context):
         + '" /></head><body></body></html>',
     )
     push()
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Done. Your link is https://r.wcyat.me/" + path + ".")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Done. Your link is https://l.wcyat.me/" + path + ". Please wait for at least 1 minute before trying to visit.")
 
 def ownercreate(dir, link, update, context):
     os.system("mkdir -p " + dir + " && cd " + dir + " && touch index.html")
@@ -92,7 +87,7 @@ def start(update, context):
             text="Commands:\n/create <path> <link>: create new redirect path\n/rm <path>: remove a redirect path\n/list: list files",
         )
     else:
-        cout(chat_id=user, text="permission denied")
+        cout(chat_id=user, text="Commands:\n/create  <link>: create new shortened url")
 
 
 def messageh(update, context):
@@ -106,11 +101,11 @@ def messageh(update, context):
             link = update.message.text.replace("/create " + path + " ", "")
             ownercreate(path, link, update, context)
         else:
-            #try:
+            try:
                link = update.message.text.replace("/create ", "")
                usercreate(link, update, context)
-            #except:
-            #    bot.send_message(chat_id=update.effective_chat.id, text="syntax: /create <link>")
+            except:
+                bot.send_message(chat_id=update.effective_chat.id, text="syntax: /create <link>")
     elif "/rm" in update.message.text:
         if str(update.effective_chat.id) != owner:
           bot.send_message(chat_id=update.effective_chat.id,
