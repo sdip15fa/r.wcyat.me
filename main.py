@@ -54,7 +54,7 @@ def usercreate(link, update, context):
         + '" /></head><body></body></html>',
     )
     push()
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Done. Your link is https://l.wcyat.me/" + path + ". Please wait for at least 1 minute before trying to visit.")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Done. Your link is https://l.wcyat.me/" + path + ". Please wait for at least 1 minute before attempting to visit.")
 
 def ownercreate(dir, link, update, context):
     os.system("mkdir -p " + dir + " && cd " + dir + " && touch index.html")
