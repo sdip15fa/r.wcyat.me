@@ -92,7 +92,7 @@ def start(update, context):
 
 def messageh(update, context):
     if "/create" in update.message.text:
-        if update.effective_chat.id == owner:
+        if str(update.effective_chat.id) == owner:
             i = 8
             path = ""
             while update.message.text[i] != " ":
