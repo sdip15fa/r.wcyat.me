@@ -10,7 +10,7 @@ IT MUST BE RUN ON LINUX / UNIX
 
 # Usage
 
-First, execute the code:
+Execute the code:
 
 ```
 python3 main.py
