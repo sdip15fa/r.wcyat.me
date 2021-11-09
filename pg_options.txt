@@ -1,0 +1,6 @@
+#DO NOT MODIFY UNLESS YOU KNOW WHAT YOU ARE DOING
+include_special_characters=false
+include_upper_case=true
+include_lower_case=true
+include_numbers=true
+digits=6

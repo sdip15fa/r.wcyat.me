@@ -1,14 +1,14 @@
 import logging
-import os
+import os, subprocess
+
+os.system(
+    "git pull origin master && git pull azure master && pip install python-telegram-bot && rm -rf random-generator && git clone https://gitlab.com/wcyat/random-generator.git && cd random-generator && chmod +x spg.run"
+)
 
 import telegram
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 import wcyatfiles as files
-
-os.system(
-    "git pull origin master && git pull azure master && pip install python-telegram-bot && rm -rf random-generator && git clone https://gitlab.com/wcyat/random-generator.git"
-)
 
 bottoken = str(os.environ["bottoken"])
 owner = str(os.environ["owner"])
@@ -38,6 +38,8 @@ def list(update, context):
                          text="permission denied")
 
 def generate():
+    o = str(subprocess.run(["random-generator/spg.run"],     capture_output=True).stdout).replace("b'", "").replace("'", "")
+    return o
     os.system("cd random-generator && chmod +x spg.run && ./spg.run > ../generate.txt")
     file = open("generate.txt")
     for line in file:
@@ -104,11 +106,11 @@ def messageh(update, context):
             link = update.message.text.replace("/create " + path + " ", "")
             ownercreate(path, link, update, context)
         else:
-            try:
+            #try:
                link = update.message.text.replace("/create ", "")
                usercreate(link, update, context)
-            except:
-                bot.send_message(chat_id=update.effective_chat.id, text="syntax: /create <link>")
+            #except:
+            #    bot.send_message(chat_id=update.effective_chat.id, text="syntax: /create <link>")
     elif "/rm" in update.message.text:
         if str(update.effective_chat.id) != owner:
           bot.send_message(chat_id=update.effective_chat.id,
