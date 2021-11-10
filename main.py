@@ -2,14 +2,14 @@ import logging
 import os
 import subprocess
 
+os.system(
+    "git pull origin master && git pull azure master && pip install python-telegram-bot && rm -rf random-generator && git clone https://gitlab.com/wcyat/random-generator.git && cd random-generator && chmod +x spg.run"
+)
+
 import telegram
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 import wcyatfiles as files
-
-os.system(
-    "git pull origin master && git pull azure master && pip install python-telegram-bot && rm -rf random-generator && git clone https://gitlab.com/wcyat/random-generator.git && cd random-generator && chmod +x spg.run"
-)
 
 bottoken = str(os.environ["bottoken"])
 owner = str(os.environ["owner"])
