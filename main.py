@@ -1,5 +1,6 @@
 import logging
-import os, subprocess
+import os
+import subprocess
 
 os.system(
     "git pull origin master && git pull azure master && pip install python-telegram-bot && rm -rf random-generator && git clone https://gitlab.com/wcyat/random-generator.git && cd random-generator && chmod +x spg.run"
@@ -37,24 +38,33 @@ def list(update, context):
         bot.send_message(chat_id=update.effective_chat.id,
                          text="permission denied")
 
+
 def generate():
-    o = str(subprocess.run(["random-generator/spg.run"],     capture_output=True).stdout).replace("b'", "").replace("'", "")
+    o = (str(
+        subprocess.run(["random-generator/spg.run"],
+                       capture_output=True).stdout).replace("b'", "").replace(
+                           "'", ""))
     return o
 
+
 def usercreate(link, update, context):
-    path = "o/" + generate();
+    path = "o/" + generate()
     print(path)
     while files.checkexist(path + "/index.html"):
-        path = "o/" + generate();
+        path = "o/" + generate()
     os.system("mkdir -p " + path + " && cd " + path + " && touch index.html")
     files.appendfile(
         path + "/index.html",
         '<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url='
-        + link
-        + '" /></head><body></body></html>',
+        + link + '" /></head><body></body></html>',
     )
     push()
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Done. Your link is https://l.wcyat.me/" + path + ". Please wait for at least 1 minute before attempting to visit.")
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Done. Your link is https://l.wcyat.me/" + path +
+        ". Please wait for at least 1 minute before attempting to visit.",
+    )
+
 
 def ownercreate(dir, link, update, context):
     os.system("mkdir -p " + dir + " && cd " + dir + " && touch index.html")
@@ -63,11 +73,11 @@ def ownercreate(dir, link, update, context):
     files.appendfile(
         dir + "/index.html",
         '<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0; url='
-        + link
-        + '" /></head><body></body></html>',
+        + link + '" /></head><body></body></html>',
     )
     push()
     context.bot.send_message(chat_id=owner, text="Done.")
+
 
 def remove(dir, update, context):
     try:
@@ -87,12 +97,13 @@ def start(update, context):
             text="Commands:\n/create <path> <link>: create new redirect path\n/rm <path>: remove a redirect path\n/list: list files",
         )
     else:
-        cout(chat_id=user, text="Commands:\n/create  <link>: create new shortened url")
+        cout(chat_id=user,
+             text="Commands:\n/create  <link>: create new shortened url")
 
 
 def messageh(update, context):
     if "/create" in update.message.text:
-        if update.effective_chat.id == owner:
+        if str(update.effective_chat.id) == owner:
             i = 8
             path = ""
             while update.message.text[i] != " ":
@@ -102,17 +113,18 @@ def messageh(update, context):
             ownercreate(path, link, update, context)
         else:
             try:
-               link = update.message.text.replace("/create ", "")
-               usercreate(link, update, context)
+                link = update.message.text.replace("/create ", "")
+                usercreate(link, update, context)
             except:
-                bot.send_message(chat_id=update.effective_chat.id, text="syntax: /create <link>")
+                bot.send_message(chat_id=update.effective_chat.id,
+                                 text="syntax: /create <link>")
     elif "/rm" in update.message.text:
         if str(update.effective_chat.id) != owner:
-          bot.send_message(chat_id=update.effective_chat.id,
-                         text="permission denied")
+            bot.send_message(chat_id=update.effective_chat.id,
+                             text="permission denied")
         else:
-          path = update.message.text.replace("/rm ", "")
-          remove(path, update, context)
+            path = update.message.text.replace("/rm ", "")
+            remove(path, update, context)
 
 
 start_handler = CommandHandler("start", start)
@@ -122,6 +134,6 @@ dispatcher.add_handler(start_handler)
 dispatcher.add_handler(list_handler)
 dispatcher.add_handler(message_handler)
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-)
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO)
 updater.start_polling()
