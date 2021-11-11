@@ -4,6 +4,9 @@ function getvar(variable) {
   for (i of vars) {
     let pair = i.split("=");
     if (pair[0] === variable) {
+      if (!(pair[1].startsWith("https://") || pair[1].startsWith("http://"))) {
+        pair[1] = `https://${pair[1]}`;
+      };
       const regexp = new RegExp(
         "^(https?:\\/\\/)?" + // protocol
           "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
